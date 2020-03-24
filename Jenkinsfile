@@ -1,8 +1,8 @@
 timestamps {
     node('maven') {
         stage('Checkout'){
-            //checkout scm
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/cmotta2016/springboot-mongodb-crud.git']]])
+            checkout scm
+            //checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/cmotta2016/springboot-mongodb-crud.git']]])
         }
         stage('Compile with Azure Artifacts'){
 	        sh 'mvn -gs /home/jenkins/.m2/settings.xml clean install'
