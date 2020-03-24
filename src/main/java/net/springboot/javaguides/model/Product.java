@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Product {
 	
 	@Id
-	private long id;
+	private long id = 0;
 	
 	@NotBlank
     @Size(max=100)
