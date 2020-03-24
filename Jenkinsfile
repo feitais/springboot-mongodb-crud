@@ -35,7 +35,7 @@ timestamps {
         }
         stage('Test Deployment'){
             routeHost = sh(script: "kubectl get ingress java-mongo -o jsonpath='{ .spec.rules[0].host }'", returnStdout: true).trim()
-            echo "${routeHost}"
+            echo "${routeHost}/products"
         }
     }
 }
