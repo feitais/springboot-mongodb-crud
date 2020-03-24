@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  name: java-mongo
+  labels:
+    app: java-mongo
+spec:
+  rules:
+    - host: java-mongo.aks.linux4sysadmin.com.br
+      http:
+        paths:
+          - backend:
+              serviceName: java-mongo
+              servicePort: 8080
+            path: /
+  tls:
+    - hosts:
+        - java-mongo.aks.linux4sysadmin.com.br
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: java-mongo
+ labels:
+   app: java-mongo
+spec:
+ selector:
+  app: java-mongo
+ ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ labels:
+   app: java-mongo
+ name: java-mongo
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: java-mongo
+ template:
+  metadata:
+   labels:
+     app: java-mongo
+  spec:
+   securityContext:
+    runAsUser: 0
+   imagePullSecrets:
+    - name: acr-credentials
+   containers: 
+    - name: java-mongo
+      image: " "
+      ports:
+       - containerPort: 8080
+      imagePullPolicy: Always
+      resources:
+        limits:
+          cpu: '1'
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 50Mi
